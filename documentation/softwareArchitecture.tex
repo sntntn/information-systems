@@ -1,0 +1,88 @@
+\documentclass{article}
+
+% Language setting
+% Replace `english' with e.g. `spanish' to change the document language
+\usepackage[english]{babel}
+
+% Set page size and margins
+% Replace `letterpaper' with `a4paper' for UK/EU standard size
+\usepackage[letterpaper,top=2cm,bottom=2cm,left=3cm,right=3cm,marginparwidth=1.75cm]{geometry}
+
+% Useful packages
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage[colorlinks=true, allcolors=blue]{hyperref}
+
+\title{Arhitekture sistema}
+
+\begin{document}
+\maketitle
+
+\section{Koriscena Arhitektura Sistema}
+
+    U razvoju aplikacije FitPlusPlus korišćena je \textbf{višeslojna arhitektura} (3-tier architecture) gde svaki deo je izdeljen na mikroservise. Ovaj način organizacije je izabran jer omogućava lakše održavanje i jednostavniju nadogradnju sistema novim funkcionalnostima. Razvijena je web-aplikacija sa 3 osnovna pogleda, iz perspektive \textit{korisnika}, \textit{trenera} i \textit{administratora}. 
+    
+\section{UI Layer}
+
+\begin{description}
+  \item[\textbf{Opis}] 
+  Predstavlja vizualni interfejs za korišćenje aplikacije, kao i interakcije korisnika i trenera, i upravljanje sistemom kao administrator.
+
+  \item[\textbf{Komponente}]~
+  
+  \begin{itemize}
+    \item \textbf{Admin Perspektiva} – Ova perspektiva ima meni sa listama svih klijenata i svih trenera.
+    \item \textbf{Trener Perspektiva} – Ova perspektiva ima meni sa opcijama za: određivanje slobodnih termina za individualni trening, održavanje grupnog treninga, postavljanje nutricionih planova, chat sa klijentima, dodavanje video treninga i analitike korišćenja aplikacije.
+    \item \textbf{Klijent Perspektiva} – Ova perspektiva ima meni sa opcijama za: rezervaciju individualnog treninga, rezervaciju grupnog treninga, nutricione planove, chat, video treninge kao i analitike korišćenja aplikacije.
+  \end{itemize}
+
+  \item[\textbf{Tehnologije}]
+  Vue.js, API pozivi ka dockerizovanom backendu
+\item[\textbf{Bezbednost}:] HTTPS, Autentikacija(JWT Tokeni), Permisije zasnovane na ulogama 
+\end{description}
+
+
+
+\section{Buisness Logic Layer}
+\begin{description}
+    \item[\textbf{Opis}:] Predstavlja sloj na kojem se nalazi svi zahtevi, validacije, zaštite, pravila rada aplikacije objasnjeni kroz mikroservise.
+    
+    \item[\textbf{Mikroservisi}:] ~
+        \begin{itemize}
+            \item \textbf{Identity Service} - Servis koji je zadužen za autentikaciju i autorizaciju korisnika.
+            \item \textbf{Client Service} - Servis koji je zadužen za za upravljanje profila klijenta, upravljanje profila i podacima od članstvu. 
+            \item \textbf{Trainer Service} - Servis koji je zadužen za upravljanje profila trenera, rasporeda i istorije treninga.
+            \item \textbf{Review Service} - Servis koji je dozvoljava klijentima i trenerima da ostave ocene treingna
+            \item \textbf{Payment Service} - Servis zaduzen za obradu placanja treninga.
+            \item \textbf{Chat Service} - Servis koji je zadužen za direktnu komunikaciju između klijenta i trenera, i omogućava treneru da usluži online mentorstvo.
+            \item \textbf{Video Training Service} - Servis koji omogucava korisnicima pristup biblioteci sa snimcima treninga, i informacije trenera. Treneri dodanto mogu da ubacuju ili brisu snimke.
+            \item \textbf{Reservation Service} - Servis koji omogućava rezervisanje grupnih ili individualnih treninga, zakazivanje, otakzivanje i praćenje dostupnosti termina u realnom vremenu.
+            \item \textbf{Notification Service} - Servis zadužen za push i email notifikacije, vezan za sve rezervacije, plaćanja.
+            \item \textbf{Analitics Service} - Servis koji omogućava korisnicima da prate svoje statistike korišćenja FitPlusPlus aplukacije.
+            \item \textbf{Nutrition  Service} - Servis koji je zadužen za upravljanjem planova ishrane i praćenja kalorija. Trener može da dodaje hrane i njihove nutritivne vrednosti, da pravi planove za sve tipove cilja, da dodaje, briše i menja trenutne planove.
+            \item \textbf{Gateway and Discovery Service} - Servis koji služi kao centralizovani "gateway" i stara se o tome da svaki poziv ode odgovarajućem mikorservisu. 
+        \end{itemize}
+    \item[\textbf{Tehnologije}:] ASP.NET Core, C\#, RabbitMQ, Websockets, GRPC, REST API, Ocelot, Consul 
+    \item[\textbf{Integracije}:] FluentEmail, Paypal
+\end{description}
+
+
+\section{Database Layer}
+\begin{description}
+    \item[\textbf{Opis}:] Sloj koji opisuje način čuvanja i prisutpa podacima.
+    \item[\textbf{Komponente}:]~
+         \begin{itemize}
+            \item Baza podataka - Koriste se baze podataka za skoro svaki mikro servis gde je glavna nerelaciona baza podataka MongoDB.\newline
+            Kljucni entiti su: Training, Excercise, Trainer, Client.
+        \end{itemize} 
+    \item[\textbf{Bezbednost}:] Pristupanje na osnovu uloga, enkripcija podataka
+\end{description}
+
+
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=0.5\linewidth]{softwareArchitectureDiagram.png}
+    \caption{Dijgram Arhitekture Softwera}
+\end{figure}
+
+\end{document}
