@@ -1,0 +1,100 @@
+\subsection{Slučaj upotrebe: Korišćenje četa}
+
+\subsubsection*{Kratak opis}
+Sistem omogućava razmenu poruka klijenta i odabranog trenera u real-time režimu tokom perioda od 30 dana od trenutka zakazivanja mentorskog četa. Nakon isteka tog perioda, poruke ostaju dostupne za čitanje, ali slanje novih poruka nije dozvoljeno.
+
+\subsubsection*{Akteri}
+\begin{itemize}
+    \item \textbf{Klijent} -- korisnik koji komunicira sa trenerom u okviru kupljenog mentorskog četa.
+    \item \textbf{Trener} -- korisnik koji komunicira sa klijentom u okviru mentorskog četa.
+\end{itemize}
+
+\subsubsection*{Preduslovi}
+\begin{itemize}
+    \item Mentorski čet je uspešno zakazan (slučaj upotrebe \textbf{"Rezervisanje čet mentorstva"} je završen uspešno).
+    \item Klijenti trener moraju biti registrovani.
+    \item Nije istekao period od 30 dana od trenutka zakazivanja mentorskog četa.
+\end{itemize}
+
+\subsubsection*{Osnovni tok}
+\begin{enumerate}
+    \item Klijent ili trener se uloguje u aplikaciju.
+    \item Klijent ili trener otvara mentorski čet.
+    \item Sistem proverava da li je mentorski čet aktivan (da li je prošlo manje od 30 dana od zakazivanja).
+    \item Sistem prikazuje istoriju poruka i trenutni status mentorskog četa.
+    \item Tok se nastavlja izvršavanjem podtokova \textbf{Slanje poruke} i \textbf{Prijem i prikaz poruke} sve dok:
+    \begin{itemize}
+        \item mentorski čet ne istekne ili
+        \item korisnik ne napusti razgovor
+    \end{itemize}
+    \item Korisnik napušta mentorski čet.
+\end{enumerate}
+
+\subsubsection*{Postuslovi}
+\begin{itemize}
+    \item Sve razmenjene poruke su trajno sačuvane u sistemu.
+    \item Sistem je evidentirao autora i vreme slanja svake poruke.
+    \item Poruke su dostupne za kasnije čitanje i pregled istorije razgovora.
+\end{itemize}
+
+\subsubsection*{Podtokovi}
+
+\textbf{P1: Slanje poruke}
+\begin{enumerate}
+    \item Klijent ili trener unosi tekst poruke i bira opciju \textbf{Pošalji}.
+    \item Sistem proverava da li je poruka validna (npr. nije prazna).
+    \item Sistem čuva poruku zajedno sa informacijama o pošiljaocu i vremenu slanja.
+    \item Sistem prikazuje poslatu poruku pošiljaocu.
+    \item Sistem isporučuje poruku drugom učesniku.
+\end{enumerate}
+
+\textbf{P2: Prijem i prikaz poruke}
+\begin{enumerate}
+    \item Sistem prima novu poruku namenjenu korisniku.
+    \item Ako je mentorski čet trenutno otvoren, sistem odmah prikazuje poruku korisniku.
+    \item Ako mentorski čet nije otvoren, sistem evidentira novu poruku i može poslati notifikaciju korisniku.
+\end{enumerate}
+
+\subsubsection*{Alternativni tokovi}
+
+\textbf{A1: Mentorski čet je istekao (read-only režim)}
+\begin{itemize}
+    \item U koraku 2 sistem utvrđuje da je istekao period od 30 dana od zakazivanja.
+    \item Sistem prikazuje istoriju poruka, ali onemogućava unos i slanje novih poruka.
+    \item Ako korisnik pokuša da pošalje poruku, sistem prikazuje obaveštenje da je mentorski čet istekao.
+    \item Slučaj upotrebe se nastavlja samo u režimu čitanja ili se završava.
+\end{itemize}
+
+\textbf{A2: Slanje poruke nije uspešno}
+\begin{itemize}
+    \item U koraku 6 dolazi do sistemske greške (npr. problem sa bazom ili mrežom).
+    \item Sistem obaveštava korisnika da poruka nije poslata.
+    \item Korisnik može pokušati ponovo (povratak na korak 4) ili odustati, čime se slučaj upotrebe završava.
+\end{itemize}
+
+\subsubsection*{Dodatne informacije}
+\begin{itemize}
+    \item Mentorski čet funkcioniše u real-time režimu kako bi nove poruke bile odmah prikazane korisnicima.
+    \item Inicijalne predefinisane poruke mogu biti automatski poslate u ime trenera odmah nakon uspešne uplate i zakazivanja mentorskog četa, kao deo prethodnog slučaja upotrebe.
+    \item Nakon isteka mentorskog perioda, čet prelazi u \textbf{read-only} režim, ali se kompletna istorija poruka trajno čuva u sistemu.
+    \item Čet u aplikaciji služi isključivo za razmenu poruka između klijenta i odabranog trenera. Trener - trener ili klijent - klijent četovi nisu podržani.
+\end{itemize}
+
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=0.9\linewidth]{images/koristi_cet.png}
+    \caption{Dijagram slučaja upotrebe "Korišćenje četa"}
+\end{figure}
+
+
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=0.9\linewidth]{diagrams/activity_diagrams/Chat_activity_diagram.pdf}
+    \caption{Dijagram aktivnosti "Korišćenje četa"}
+\end{figure}
+
+
+
+
+
+\FloatBarrier

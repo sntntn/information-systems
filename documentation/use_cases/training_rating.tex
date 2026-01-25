@@ -1,0 +1,71 @@
+\subsection{Slučaj upotrebe: Ocenjivanje završenog treninga}
+
+\subsubsection*{Kratak opis}
+Klijent ocenjuje završeni individualni ili grupni trening i, po želji, ostavlja komentar. Sistem čuva ocenu i komentar i čini ih dostupnim trenerima radi uvida i unapređenja kvaliteta treninga.
+
+\subsubsection*{Akteri}
+\begin{itemize}
+    \item \textbf{Klijent} -- korisnik koji je učestvovao u individualnom ili grupnom treningu i želi da ga oceni.
+\end{itemize}
+
+\subsubsection*{Preduslovi}
+\begin{itemize}
+    \item Klijent mora da bude registrovan.
+    \item Klijent ima barem jedan završen individualni ili grupni trening.
+\end{itemize}
+
+\subsubsection*{Osnovni tok}
+\begin{enumerate}
+    \item Klijent se uloguje u aplikaciju.
+    \item Klijent otvara jedan od sledećih tabova u navigaciji:
+    \begin{itemize}
+        \item "Group training"
+        \item "Individual training"
+    \end{itemize}
+    \item Sistem prikazuje listu treninga koje je klijent završio.
+    \item Klijent bira završeni trening koji želi da oceni.
+    \item Sistem prikazuje formu za ocenjivanje treninga.
+    \item Klijent dodeljuje ocenu završenom treningu.
+    \item Klijent opciono unosi komentar o završenom treningu.
+    \item Klijent potvrđuje unos ocene i komentara.
+    \item Sistem validira unete podatke.
+    \item Sistem čuva ocenu i komentar vezane za izabrani trening i klijenta.
+    \item Sistem ažurira prikaz ocena i čini ih dostupnim trenerima na njihovim početnim stranicama.
+\end{enumerate}
+
+\subsubsection*{Postuslovi}
+\begin{itemize}
+    \item Ocena završenog treninga je sačuvana u sistemu.
+    \item Opciono unet komentar je sačuvan u sistemu.
+    \item Treneri imaju pristup ocenama i komentarima klijenata na svojim početnim stranicama.
+\end{itemize}
+
+\subsubsection*{Alternativni tokovi}
+
+\textbf{A1: Klijent ne unese komentar}
+\begin{itemize}
+    \item U koraku 6 klijent ne unosi komentar.
+    \item Sistem prihvata unos samo sa ocenom i nastavlja tok od koraka 7.
+\end{itemize}
+
+\textbf{A2: Trening je već ocenjen}
+\begin{itemize}
+    \item U koraku 3 sistem utvrđuje da je izabrani trening već ocenjen od strane klijenta.
+    \item Sistem obaveštava klijenta da je ocenjivanje tog treninga već izvršeno.
+    \item Sistem može omogućiti izmenu postojeće ocene i komentara ili završava slučaj upotrebe, u zavisnosti od pravila sistema.
+\end{itemize}
+
+\subsubsection*{Dodatne informacije}
+\begin{itemize}
+    \item Ocena se daje u unapred definisanom opsegu (od 1 do 10).
+    \item Komentar je opcion i može imati ograničenje dužine.
+    \item Ocene i komentari su vidljivi trenerima, ali nisu javno dostupni drugim klijentima.
+    \item Sistem može koristiti ocene za izračunavanje prosečne ocene treninga ili trenera.
+\end{itemize}
+
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=0.9\linewidth]{images/ocenjivanje_zavrsenog.png}
+    \caption{Dijagram slučaja upotrebe "Ocenjivanje završenog treninga"}
+\end{figure}
+\FloatBarrier

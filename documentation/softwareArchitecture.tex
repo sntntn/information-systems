@@ -1,28 +1,10 @@
-\documentclass{article}
+\section{Arhitektura Sistema}
 
-% Language setting
-% Replace `english' with e.g. `spanish' to change the document language
-\usepackage[english]{babel}
-
-% Set page size and margins
-% Replace `letterpaper' with `a4paper' for UK/EU standard size
-\usepackage[letterpaper,top=2cm,bottom=2cm,left=3cm,right=3cm,marginparwidth=1.75cm]{geometry}
-
-% Useful packages
-\usepackage{amsmath}
-\usepackage{graphicx}
-\usepackage[colorlinks=true, allcolors=blue]{hyperref}
-
-\title{Arhitekture sistema}
-
-\begin{document}
-\maketitle
-
-\section{Koriscena Arhitektura Sistema}
+\subsection{Korišćena Arhitektura Sistema}
 
     U razvoju aplikacije FitPlusPlus korišćena je \textbf{višeslojna arhitektura} (3-tier architecture) gde svaki deo je izdeljen na mikroservise. Ovaj način organizacije je izabran jer omogućava lakše održavanje i jednostavniju nadogradnju sistema novim funkcionalnostima. Razvijena je web-aplikacija sa 3 osnovna pogleda, iz perspektive \textit{korisnika}, \textit{trenera} i \textit{administratora}. 
     
-\section{UI Layer}
+\subsubsection{UI Layer}
 
 \begin{description}
   \item[\textbf{Opis}] 
@@ -43,7 +25,7 @@
 
 
 
-\section{Buisness Logic Layer}
+\subsubsection{Buisness Logic Layer}
 \begin{description}
     \item[\textbf{Opis}:] Predstavlja sloj na kojem se nalazi svi zahtevi, validacije, zaštite, pravila rada aplikacije objasnjeni kroz mikroservise.
     
@@ -66,7 +48,7 @@
     \item[\textbf{Integracije}:] FluentEmail, Paypal
 \end{description}
 
-\section{Database Layer}
+\subsubsection{Database Layer}
 \begin{description}
     \item[\textbf{Opis}:] Sloj koji opisuje način čuvanja i prisutpa podacima.
     \item[\textbf{Komponente}:]~
@@ -79,8 +61,6 @@
 
 \begin{figure}[h!]
     \centering
-    \includegraphics[width=0.5\linewidth]{architectureDiagram.png}
+    \includegraphics[width=0.5\linewidth]{images/architectureDiagram.png}
     \caption{Dijgram Arhitekture Softwera}
 \end{figure}
-
-\end{document}

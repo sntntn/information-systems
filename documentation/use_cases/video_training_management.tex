@@ -1,0 +1,119 @@
+\subsection{Slučaj upotrebe: Upravljanje video treninzima}
+
+\subsubsection*{Kratak opis}
+Trener upravlja sopstvenim video vežbama i video treninzima. Sistem omogućava treneru da kreira, briše i pregleda vežbe i treninge, kao i da kombinuje vežbe u treninge sa definisanim brojem ponavljanja i setova. Trener može izvršavati ove aktivnosti proizvoljan broj puta tokom korišćenja sistema.
+
+\subsubsection*{Akteri}
+\begin{itemize}
+    \item \textbf{Trener} -- korisnik koji kreira i upravlja sopstvenim video vežbama i treninzima.
+\end{itemize}
+
+\subsubsection*{Preduslovi}
+\begin{itemize}
+    \item Trener mora da bude registrovan.
+\end{itemize}
+
+\subsubsection*{Osnovni tok}
+\begin{enumerate}
+    \item Trener se uloguje u aplikaciju.
+    \item Trener otvara tab za "Video trainings" u navigaciji.
+    \item Sistem prikazuje listu vežbi koje je trener kreirao i listu treninga koje je trener kreirao.
+    \item Trener bira jednu od dostupnih akcija:
+    \begin{itemize}
+        \item kreiranje nove vežbe,
+        \item kreiranje novog treninga,
+        \item brisanje postojeće vežbe,
+        \item brisanje postojećeg treninga.
+    \end{itemize}
+    \item U zavisnosti od izbora, sistem izvršava odgovarajući podtok.
+    \item Trener se vraća na stranicu za upravljanje video treninzima.
+    \item Koraci 3--5 se ponavljaju sve dok trener ne odluči da napusti stranicu.
+\end{enumerate}
+
+\subsubsection*{Postuslovi}
+\begin{itemize}
+    \item Vežbe i treninzi su ažurirani u skladu sa akcijama koje je trener izvršio.
+    \item Sistem je sačuvao sve validne izmene koje je trener napravio.
+\end{itemize}
+
+\subsubsection*{Podtokovi}
+
+\textbf{P1: Kreiranje vežbe}
+\begin{enumerate}
+    \item Trener bira opciju \textbf{Dodaj vežbu}.
+    \item Sistem prikazuje formu za unos podataka o vežbi.
+    \item Trener unosi naziv vežbe i učitava video snimak vežbe.
+    \item Trener potvrđuje unos.
+    \item Sistem validira podatke i čuva novu vežbu.
+\end{enumerate}
+
+\textbf{P2: Kreiranje treninga}
+\begin{enumerate}
+    \item Trener bira opciju \textbf{Dodaj trening}.
+    \item Sistem proverava da li trener ima barem jednu sačuvanu vežbu.
+    \item Sistem prikazuje formu za kreiranje treninga.
+    \item Trener unosi naziv treninga i opis treninga.
+    \item Sistem prikazuje listu vežbi koje je trener kreirao.
+    \item Trener bira jednu ili više vežbi i za svaku definiše broj ponavljanja i broj setova.
+    \item Trener potvrđuje kreiranje treninga.
+    \item Sistem validira podatke i čuva novi trening.
+\end{enumerate}
+
+\textbf{P3: Brisanje vežbe}
+\begin{enumerate}
+    \item Trener bira opciju brisanja vežbe.
+    \item Sistem proverava da li je vežba deo nekog postojećeg treninga.
+    \item Ako vežba nije deo nijednog treninga, sistem briše vežbu.
+    \item Ako je vežba deo jednog ili više treninga, sistem obaveštava trenera i može zahtevati dodatnu potvrdu ili zabraniti brisanje.
+\end{enumerate}
+
+\textbf{P4: Brisanje treninga}
+\begin{enumerate}
+    \item Trener bira opciju brisanja treninga.
+    \item Sistem traži potvrdu brisanja.
+    \item Nakon potvrde, sistem briše trening.
+\end{enumerate}
+
+\subsubsection*{Alternativni tokovi}
+
+\textbf{A1: Neuspešan upload video snimka (podtok: P1 Kreiranje vežbe)}
+\begin{itemize}
+    \item U koraku 3 podtoka \textbf{Kreiranje vežbe} sistem ne uspeva da učita video snimak (npr. mrežna greška, prekid konekcije).
+    \item Sistem obaveštava trenera da upload nije uspeo.
+    \item Trener može pokušati ponovo da učita video (povratak na korak 3 podtoka) ili odustati, čime se podtok završava bez kreiranja vežbe.
+\end{itemize}
+
+\textbf{A2: Nevalidan format ili veličina video snimka (podtok: P1 Kreiranje vežbe)}
+\begin{itemize}
+    \item U koraku 4 podtoka \textbf{Kreiranje vežbe} sistem detektuje da video snimak ne ispunjava uslove (npr. nedozvoljen format ili prevelika veličina fajla).
+    \item Sistem prikazuje poruku o grešci i traži da trener izabere drugi video snimak.
+    \item Trener se vraća na korak 3 podtoka.
+\end{itemize}
+
+\textbf{A3: Trener pokušava da kreira trening bez postojećih vežbi (podtok: P2 Kreiranje treninga)}
+\begin{itemize}
+    \item U koraku 2 podtoka \textbf{Kreiranje treninga} sistem utvrđuje da trener nema nijednu sačuvanu vežbu.
+    \item Sistem obaveštava trenera da je potrebno prvo kreirati barem jednu vežbu.
+    \item Podtok se prekida, a trener se vraća na stranicu za upravljanje video treninzima.
+\end{itemize}
+
+\subsubsection*{Dodatne informacije}
+\begin{itemize}
+    \item Trener može kreirati proizvoljan broj vežbi pre kreiranja treninga.
+    \item Trening mora sadržati barem jednu vežbu.
+    \item Samo vežbe i treninzi koje je trener kreirao mogu biti menjani ili obrisani od strane tog trenera.
+\end{itemize}
+
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=0.9\linewidth]{images/upravljanje_video_treninzima.png}
+    \caption{Dijagram slučaja upotrebe "Upravljanje video treninzima"}
+\end{figure}
+
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=0.9\linewidth]{diagrams/sequence_diagrams/manage_video_trainings.png}
+    \caption{Sekvencijalni dijagram "Upravljanje video treninzima"}
+\end{figure}
+
+\FloatBarrier

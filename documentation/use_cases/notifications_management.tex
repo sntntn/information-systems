@@ -1,0 +1,84 @@
+\subsection{Slučaj upotrebe: Upravljanje obaveštenjima}
+
+\subsubsection*{Kratak opis}
+Korisnik upravlja obaveštenjima koja dobija kao rezultat različitih aktivnosti u sistemu. Sistem omogućava pregled liste obaveštenja, pregled detalja obaveštenja, označavanje obaveštenja kao pročitanih i brisanje obaveštenja.
+
+\subsubsection*{Akteri}
+\begin{itemize}
+    \item \textbf{Korisnik} -- registrovani korisnik sistema koji prima i upravlja svojim obaveštenjima.
+\end{itemize}
+
+\subsubsection*{Preduslovi}
+\begin{itemize}
+    \item Korisnik mora da bude registrovan.
+    \item Postoje generisana obaveštenja za korisnika kao rezultat drugih slučajeva upotrebe sistema.
+\end{itemize}
+
+\subsubsection*{Osnovni tok}
+\begin{enumerate}
+    \item Korisnik se uloguje u aplikaciju.
+    \item Korisnik otvara listu sa obaveštenjima u aplikaciji.
+    \item Sistem prikazuje listu obaveštenja, pri čemu su obaveštenja inicijalno prikazana samo po naslovima i sa jasno označenim statusom (pročitano / nepročitano).
+    \item Tok se nastavlja izvršavanjem podtokova \textbf{P1: Pregled obaveštenja} i \textbf{P2: Brisanje obaveštenja} sve dok korisnik ne odluči da zatvori listu obaveštenja.
+    \item Korisnik zatvara listu obaveštenja.
+\end{enumerate}
+
+\subsubsection*{Postuslovi}
+\begin{itemize}
+    \item Statusi obaveštenja su ažurirani u skladu sa akcijama korisnika.
+    \item Obrisana obaveštenja više nisu prikazana u listi obaveštenja.
+\end{itemize}
+
+\subsubsection*{Podtokovi}
+
+\textbf{P1: Pregled obaveštenja}
+\begin{enumerate}
+    \item Korisnik bira obaveštenje iz liste (pročitano ili nepročitano).
+    \item Sistem prikazuje detalje izabranog obaveštenja.
+    \item Ako je izabrano obaveštenje bilo u statusu \textbf{nepročitano}, sistem automatski menja njegov status u \textbf{pročitano}.
+    \item Korisnik se vraća na listu obaveštenja.
+\end{enumerate}
+
+\textbf{P2: Brisanje obaveštenja}
+\begin{enumerate}
+    \item Korisnik bira jedno ili više obaveštenja za brisanje.
+    \item Korisnik potvrđuje brisanje.
+    \item Sistem uklanja izabrana obaveštenja iz liste.
+\end{enumerate}
+
+\subsubsection*{Alternativni tokovi}
+
+\textbf{A1: Nema dostupnih obaveštenja}
+\begin{itemize}
+    \item U koraku 2 osnovnog toka sistem ne pronalazi nijedno obaveštenje za korisnika.
+    \item Sistem prikazuje poruku da nema dostupnih obaveštenja.
+    \item Slučaj upotrebe se završava.
+\end{itemize}
+
+\subsubsection*{Dodatne informacije}
+\begin{itemize}
+    \item Obaveštenja mogu nastati kao posledica različitih slučajeva upotrebe sistema (npr. zakazivanje mentorskog četa, nova poruka u četu, promene statusa treninga).
+    \item Korisnik može otvoriti detalje i pročitanih i nepročitanih obaveštenja; samo u slučaju nepročitanih obaveštenja sistem menja njihov status u \textbf{pročitano}.
+    \item Brisanjem obaveštenja uklanja se samo korisnička kopija obaveštenja, dok sistemska evidencija može ostati sačuvana.
+\end{itemize}
+
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=0.9\linewidth]{images/upravljanje_obavestenjima.png}
+    \caption{Dijagram slučaja upotrebe "Upravljanje obaveštenjima"}
+\end{figure}
+
+
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=0.9\linewidth]{diagrams/sequence_diagrams/manage_notifications.png}
+    \caption{Sekvencijalni dijagram "Upravljanje obaveštenjima"}
+\end{figure}
+
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=0.9\linewidth]{diagrams/state_diagrams/manage_notifications.png}
+    \caption{Dijagram stanja "Upravljanje obaveštenjima"}
+\end{figure}
+
+\FloatBarrier

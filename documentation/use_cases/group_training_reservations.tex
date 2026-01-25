@@ -1,0 +1,49 @@
+\subsection{Slučaj Upotrebe: Upravljanje rezervacijama grupnih treninga}  
+    
+\subsubsection*{Kratak Opis}
+    
+    Klijent se prijavljuje na ili odustaje od zakazanog grupnog treninga kod željenog trenera.
+    
+    
+\subsubsection*{Akteri}
+    
+    \begin{itemize}
+        \item\textbf{Klijent} -- Osoba koja želi da se prijavi trening.
+    \end{itemize}
+    
+    
+\subsubsection*{Preduslov}
+\begin{itemize}
+    \item Klijent mora da bude registrovan.
+    \item Izabrani trening mora imati slobodnih mesta.
+\end{itemize}
+    
+\subsubsection*{Osnovni tok}
+    \begin{enumerate}
+        \item Klijent se uloguje u aplikaciju.
+        \item Klijent otvara tab za "Group training" u navigaciji.
+        \item Klijent bira željeni grupni treining, koji ima barem jedno slobodno mesto.
+        \item Klijent pregleda detalje treninga.
+        \item Klijent pritiska dugme "Book" i prijavljuje se za trening.
+    \end{enumerate}
+    
+\subsubsection*{Alternativni tokovi}
+
+  \begin{itemize}
+        \item \textbf{A1: Nema slobodnih mesta} - Rezervacija je odbijena jer je nestalo slobodnih mesta pre prijavljivanja.
+        \item \textbf{A2: Otkazivanje rezervacije} - Otkazivanje rezervacije se izvršava tako što se korisnik pozicionira na stranicu "Grupni trening" i u koloni "Available Group Trainings" izabere rezervaciju koju želi da otkaže klikom na dugme
+    \end{itemize}
+
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=0.9\linewidth]{images/upravljanje_rezervacijama_grupnih.png}
+    \caption{Dijagram slučaja upotrebe "Upravljanje rezervacijama grupnih treninga"}
+\end{figure}
+
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=0.9\linewidth]{diagrams/BPMN/BPMN_Diagram_GroupTrainingReservation.png}
+    \caption{BPMN dijagram "Upravljanje rezervacijama grupnih treninga"}
+\end{figure}
+
+\FloatBarrier

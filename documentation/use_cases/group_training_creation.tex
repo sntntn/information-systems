@@ -1,0 +1,72 @@
+\subsection{Slučaj upotrebe: Kreiranje i zakazivanje grupnog treninga}
+
+\subsubsection*{Kratak opis}
+Trener kreira i zakazuje novi grupni trening unosom osnovnih informacija (naziv, opis, kapacitet i termin). Nakon uspešnog kreiranja, trening se prikazuje u listi grupnih treninga, trener može pregledati detalje i otkazati trening ukoliko želi.
+
+\subsubsection*{Akteri}
+\begin{itemize}
+    \item \textbf{Trener} -- korisnik koji kreira, zakazuje i otkazuje grupne treninge.
+\end{itemize}
+
+\subsubsection*{Preduslovi}
+\begin{itemize}
+    \item Trener mora da bude registrovan.
+\end{itemize}
+
+\subsubsection*{Osnovni tok}
+\begin{enumerate}
+    \item Trener se uloguje u aplikaciju.
+    \item Trener otvara tab za "Group trainings" u navigaciji.
+    \item Sistem prikazuje listu postojećih grupnih treninga trenera i opciju za kreiranje novog treninga.
+    \item Trener bira opciju \textbf{Create group training}.
+    \item Sistem prikazuje formu za kreiranje grupnog treninga.
+    \item Trener unosi sledeće podatke:
+    \begin{itemize}
+        \item training name,
+        \item description,
+        \item capacity,
+        \item training date,
+        \item start time,
+        \item end time.
+    \end{itemize}
+    \item Trener potvrđuje kreiranje treninga.
+    \item Sistem validira unete podatke.
+    \item Sistem kreira grupni trening i dodaje ga u listu grupnih treninga trenera.
+\end{enumerate}
+
+\subsubsection*{Postuslovi}
+\begin{itemize}
+    \item Novi grupni trening je sačuvan u sistemu i prikazan u listi grupnih treninga trenera.
+    \item Detalji grupnog treninga su dostupni treneru za pregled.
+    \item Trening ima mogućnost otkazivanja kreiranog treninga.
+\end{itemize}
+
+\subsubsection*{Alternativni tokovi}
+
+\textbf{A1: Nevalidan unos podataka}
+\begin{itemize}
+    \item U koraku 7 sistem detektuje nevalidne ili nepotpune podatke (npr. prazno ime, kapacitet $\leq 0$, ili neispravan format datuma/vremena).
+    \item Sistem obaveštava trenera o grešci i označava polja koja treba ispraviti.
+    \item Trener ispravlja podatke i vraća se na korak 6.
+\end{itemize}
+
+\textbf{A2: Neispravan vremenski interval}
+\begin{itemize}
+    \item U koraku 7 sistem detektuje da je \textbf{end time} pre ili jednako \textbf{start time}.
+    \item Sistem obaveštava trenera da vremenski interval nije ispravan.
+    \item Trener ispravlja vreme i vraća se na korak 6.
+\end{itemize}
+
+\subsubsection*{Dodatne informacije}
+\begin{itemize}
+    \item Otkazani trening ostaje vidljiv treneru radi evidencije, ali nije dostupan klijentima za prijavu.
+    \item Sistem može sprečiti kreiranje treninga u prošlosti (datum/vreme pre trenutnog vremena), ukoliko je to definisano pravilima sistema.
+    \item \textbf{capacity} polje forme se odnosi na veličinu grupe, odnosno broj klijenata koji mogu da učestvuju na tom treningu.
+\end{itemize}
+
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=0.9\linewidth]{images/kreiranje_zakazivanje_grupnih.png}
+    \caption{Dijagram slučaja upotrebe "Kreiranje i zakazivanje grupnog treninga"}
+\end{figure}
+\FloatBarrier

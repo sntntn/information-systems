@@ -1,0 +1,105 @@
+\subsection{Slučaj upotrebe: Upravljanje registrovanim nalozima}
+
+\subsubsection*{Kratak opis}
+Administrator upravlja registrovanim korisničkim nalozima u sistemu. Sistem omogućava dodavanje mejl adresa budućih trenera, izmenu informacija o trenerima, kao i brisanje klijentskih i trenerskih naloga uz proveru postojećih zakazanih i plaćenih usluga.
+
+\subsubsection*{Akteri}
+\begin{itemize}
+    \item \textbf{Administrator} -- korisnik sistema zadužen za upravljanje korisničkim nalozima.
+\end{itemize}
+
+\subsubsection*{Preduslovi}
+\begin{itemize}
+    \item Administrator je prijavljen u sistem.
+\end{itemize}
+
+\subsubsection*{Osnovni tok}
+\begin{enumerate}
+    \item Administrator pristupa administratorskoj sekciji za upravljanje korisničkim nalozima.
+    \item Sistem prikazuje listu registrovanih korisnika i dostupne administrativne akcije.
+    \item Tok se nastavlja izvršavanjem podtokova:
+    \begin{itemize}
+        \item \textbf{P1: Dodavanje mejl adrese trenera}
+        \item \textbf{P2: Izmena informacija o treneru}
+        \item \textbf{P3: Brisanje klijentskog naloga}
+        \item \textbf{P4: Brisanje trenerskog naloga}
+    \end{itemize}
+    \item Administrator završava upravljanje korisničkim nalozima i napušta administratorsku sekciju.
+\end{enumerate}
+
+\subsubsection*{Postuslovi}
+\begin{itemize}
+    \item Izmene nad korisničkim nalozima su sačuvane u sistemu.
+    \item Statusi korisničkih naloga su ažurirani u skladu sa izvršenim akcijama administratora.
+\end{itemize}
+
+\subsubsection*{Podtokovi}
+
+\textbf{P1: Dodavanje mejl adrese trenera}
+\begin{enumerate}
+    \item Administrator unosi mejl adresu korisnika koji treba da postane trener.
+    \item Sistem proverava da li je nalog sa tom mejl adresom već registrovan.
+    \item Ako nalog nije registrovan, sistem dodaje mejl adresu na listu trenera.
+    \item Kada se korisnik registruje sa tom mejl adresom, sistem mu automatski dodeljuje ulogu trenera.
+\end{enumerate}
+
+\textbf{P2: Izmena informacija o treneru}
+\begin{enumerate}
+    \item Administrator bira trenerski nalog iz liste korisnika.
+    \item Sistem prikazuje trenutne informacije o treneru.
+    \item Administrator menja opšte informacije o treneru (npr. biografiju).
+    \item Administrator potvrđuje izmene.
+    \item Sistem čuva ažurirane informacije o treneru.
+\end{enumerate}
+
+\textbf{P3: Brisanje klijentskog naloga}
+\begin{enumerate}
+    \item Administrator bira klijentski nalog koji želi da obriše.
+    \item Sistem proverava da li klijent ima zakazane i plaćene usluge koje još nisu iskorišćene (individualni treninzi ili mentorski čet).
+    \item Ako takve usluge ne postoje, sistem briše klijentski nalog.
+    \item Ako je klijent bio prijavljen na grupni trening, sistem automatski otkazuje učešće klijenta i oslobađa mesto za druge klijente.
+\end{enumerate}
+
+\textbf{P4: Brisanje trenerskog naloga}
+\begin{enumerate}
+    \item Administrator bira trenerski nalog koji želi da obriše.
+    \item Sistem proverava da li trener ima zakazane i plaćene usluge (individualne treninge ili mentorski čet).
+    \item Ako takve usluge ne postoje, sistem briše trenerski nalog.
+\end{enumerate}
+
+\subsubsection*{Alternativni tokovi}
+
+\textbf{A1: Brisanje naloga nije dozvoljeno}
+\begin{itemize}
+    \item Tokom podtokova \textbf{P3} ili \textbf{P4} sistem utvrđuje da korisnički nalog ne može biti obrisan zbog postojećih zakazanih i plaćenih usluga.
+    \item Sistem prikazuje administratoru jasnu poruku sa razlogom zbog kog brisanje nije moguće.
+    \item Podtok se završava bez brisanja korisničkog naloga.
+\end{itemize}
+
+\subsubsection*{Dodatne informacije}
+\begin{itemize}
+    \item Dodavanje mejl adrese na listu trenera je jedini način na koji korisnik može dobiti ulogu trenera u sistemu.
+    \item Brisanjem korisničkog naloga uklanjaju se svi povezani podaci, osim onih koje je sistem dužan da zadrži iz zakonskih ili evidencionih razloga.
+    \item Sistem obezbeđuje integritet podataka prilikom brisanja naloga i povezanih rezervacija.
+\end{itemize}
+
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=0.9\linewidth]{images/upravljanje_nalozima.png}
+    \caption{Dijagram slučaja upotrebe "Upravljanje registrovanim nalozima"}
+\end{figure}
+
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=0.9\linewidth]{diagrams/activity_diagrams/Registration_activity_diagram.pdf}
+    \caption{Dijagram aktivnosti "Upravljanje nalozima"}
+\end{figure}
+
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=0.9\linewidth]{diagrams/state_diagrams/manage_accounts.png}
+    \caption{Dijagram stanja "Upravljanje nalozima"}
+\end{figure}
+
+
+\FloatBarrier

@@ -1,0 +1,51 @@
+
+\subsection{Slučaj upotrebe: Obrada plaćanja}
+
+\subsubsection*{Kratak opis}
+Sistem obrađuje online plaćanje usluge putem eksternog platnog sistema. Sistem preusmerava korisnika na platni servis, prima potvrdu o uspešnosti plaćanja i obaveštava sistem o rezultatu transakcije.
+
+\subsubsection*{Akteri}
+\begin{itemize}
+    \item \textbf{Platni sistem} -- eksterni sistem koji obrađuje online plaćanja.
+\end{itemize}
+
+\subsubsection*{Preduslovi}
+\begin{itemize}
+    \item Korisnik je započeo slučaj upotrebe koji zahteva plaćanje.
+    \item Cena usluge je poznata.
+\end{itemize}
+
+\subsubsection*{Osnovni tok}
+\begin{enumerate}
+    \item Sistem preusmerava korisnika na stranicu platnog sistema.
+    \item Korisnik unosi podatke za plaćanje i potvrđuje transakciju.
+    \item Platni sistem obrađuje transakciju.
+    \item Platni sistem potvrđuje uspešno plaćanje.
+    \item Sistem prima potvrdu o uspešnom plaćanju.
+\end{enumerate}
+
+\subsubsection*{Postuslovi}
+\begin{itemize}
+    \item Plaćanje je uspešno izvršeno i evidentirano.
+\end{itemize}
+
+\subsubsection*{Alternativni tokovi}
+
+\textbf{A1: Plaćanje nije uspešno}
+\begin{itemize}
+    \item Platni sistem odbija transakciju ili vraća grešku.
+    \item Sistem prima informaciju o neuspešnom plaćanju.
+\end{itemize}
+
+\subsubsection*{Dodatne informacije}
+\begin{itemize}
+    \item Za obradu online plaćanja sistem koristi eksterni platni servis \textbf{PayPal}.
+    \item Sistem ne čuva osetljive podatke o plaćanju (broj kartice, CVV i slično), već se kompletna obrada transakcije vrši preko PayPal sistema.
+    \item Uspešno ili neuspešno izvršenje plaćanja određuje dalji tok slučaja upotrebe.
+
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=0.9\linewidth]{images/obradjivanje_naplate.png}
+    \caption{Dijagram slučaja upotrebe "Obrade plaćanja"}
+\end{figure}
+\end{itemize}
