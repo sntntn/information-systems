@@ -1,0 +1,65 @@
+\subsection{Slučaj upotrebe: Rezervisanje čet mentorstva}
+
+\subsubsection*{Kratak opis}
+Klijent zakazuje termin za mentorski čet sa trenerom. Sistem naplaćuje uslugu, šalje potvrdu treneru i započinje čet.
+
+\subsubsection*{Akteri}
+\begin{itemize}
+    \item \textbf{Klijent} -- korisnik koji želi da zakaže mentorski čet sa trenerom.
+    \item \textbf{Platni sistem} -- eksterni sistem koji obrađuje online plaćanje.
+\end{itemize}
+
+\subsubsection*{Preduslovi}
+\begin{itemize}
+    \item Klijent mora da bude registrovan.
+    \item Postoje dostupni treneri.
+    \item Klijent ima validan način plaćanja.
+\end{itemize}
+
+\subsubsection*{Osnovni tok}
+\begin{enumerate}
+    \item Klijent se uloguje u aplikaciju.
+    \item Klijent otvara tab početne stranice u navigaciji.
+    \item Sistem prikazuje listu dostupnih trenera, njihove specijalizacije i biografije.
+    \item Klijent bira trenera sa kojim želi mentorski čet.
+    \item Sistem prikazuje cenu usluge i uslove.
+    \item Klijent potvrđuje zakazivanje.
+    \item Sistem pokreće slučaj upotrebe \textbf{"Obrada plaćanja"}.
+    \item Sistem šalje obaveštenje treneru o novom zakazanom mentorskom četu (mejl / notifikacija).
+    \item Sistem kreira čet u ime trenera šalje predefinisane poruke dobrodošlice klijentu.
+\end{enumerate}
+
+\subsubsection*{Postuslovi}
+\begin{itemize}
+    \item Mentorski čet je uspešno zakazan.
+    \item Plaćanje je evidentirano.
+    \item Trener je obavešten o detaljima zakazanog mentorskog četa.
+\end{itemize}
+
+\subsubsection*{Dodatne informacije}
+\begin{itemize}
+    \item Uslovi usluge u koraku 4 se odnose dužinu trajanja dostupnosti mentorskog četa, kao i konkretni načini na koji će mentor pomoći klijentu (povratne informacije o napretku, saveti i slično).
+\end{itemize}
+
+\subsubsection*{Alternativni tokovi}
+
+\textbf{A1: Plaćanje nije uspešno}
+\begin{itemize}
+    \item U koraku 7 sistem ne evidentira uspešnu kupovinu.
+    \item Sistem obaveštava klijenta o neuspešnom plaćanju.
+    \item Klijent se vraća na korak 6 i može pokušati ponovo ili odustati, čime se slučaj upotrebe završava bez kreiranja rezervacije.
+\end{itemize}
+
+
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=0.9\linewidth]{images/rezervisanje_cet_mentorstva.png}
+    \caption{Dijagram slučaja upotrebe "Rezervisanje čet mentorstva"}
+\end{figure}
+
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=0.9\linewidth]{diagrams/state_diagrams/book_chat_mentorship.png}
+    \caption{Dijagram stanja "Rezervisanje čet mentorstva"}
+\end{figure}
+\FloatBarrier

@@ -1,0 +1,69 @@
+\subsection{Slučaj Upotrebe: Upravljanje rezervacijama individualnih treninga}
+
+    
+\subsubsection*{Kratak Opis}
+    
+    Klijent zakazuje novi ili otkazuje zakazan termin za individualni trening kod željenog trenera.
+    
+    
+\subsubsection*{Akteri}
+    
+    \begin{itemize}
+        \item\textbf{Klijent} -- Osoba koja želi da zakaže trening.
+        \item\textbf{Trener} -- Osoba kod koja će držati trening.
+        \item \textbf{Platni sistem} -- eksterni sistem koji obrađuje online plaćanje.
+    \end{itemize}
+    
+\subsubsection*{Preduslovi}
+\begin{itemize}
+    \item Klijent mora da bude registrovan.
+    \item Izabrani trener mora da ima slobodan termin.
+    \item Klijent mora imati sredstava da plati trening.
+\end{itemize}
+    
+\subsubsection*{Osnovni tok}
+    \begin{enumerate}
+        \item Klijent se uloguje u aplikaciju.
+        \item Klijent otvara tab za "Individual training" u navigaciji.
+        \item Klijent bira željenog trenera kod kojeg će raditi trening.
+        \item Klijent bira slobodan termin po želji.
+        \begin{itemize}
+           \item Klijent proverava da li postoji slobodan termin.
+           \item Klijent bira datum početka treninga.
+           \item Klijent bira vreme početka treninga.
+        \end{itemize}
+        \item Klijent bira tip treninga.
+        \item Klijent pritiska dugme za plaćanje
+        \item Sistem pokreće slučaj upotrebe \textbf{"Obrada plaćanja"}.
+        \item Sistem evidentira kupovinu individualnog treninga.
+        \item Nakon toga klijent dobija obavestenje o uspešnom plaćanju i moze videti podatke o rezervaciji u "Reserved trainings" koloni strane.
+    \end{enumerate}
+    
+\subsubsection*{Alternativni tokovi}
+
+  \begin{itemize}
+        \item \textbf{A1: Nema dostupnih termina} - Rezervacija je odbijena jer je nestalo slobodnih termina pre plaćanja
+        \item \textbf{A2: Otkazivanje rezervacije} - Otkazivanje rezervacije se izvršava tako što se klijent pozicionira na stranicu "Individualni trening" i u koloni "Reserved trainings" izabere rezervaciju koju želi da otkaže klikom na dugme.Nakon toga klijent će morati da se preusmeri na stranicu platnog sistema da bi mu transakcija bila otkazana.
+    \end{itemize}
+
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=0.9\linewidth]{images/upravljanje_rezervacijama_individualnih.png}
+    \caption{Dijagram slučaja upotrebe "Upravljanje rezervacijama individualnih treninga"}
+    \label{fig:placeholder}
+\end{figure}
+
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=0.9\linewidth]{diagrams/BPMN/BPMN_Diagram_IndividualTrainingReservation.png}
+    \caption{BPMN dijagram "Upravljanje rezervacijama individualnih treninga"}
+\end{figure}
+
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=0.9\linewidth]{diagrams/activity_diagrams/Individual_Training_activity_diagram.pdf}
+    \caption{Dijagram aktivnosti "Upravljanje rezervacijama individualnih treninga"}
+\end{figure}
+
+
+\FloatBarrier

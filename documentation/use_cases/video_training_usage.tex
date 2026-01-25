@@ -1,0 +1,75 @@
+\subsection{Slučaj upotrebe: Treniranje po video snimcima}
+
+\subsubsection*{Kratak opis}
+Klijent pregleda dostupne video treninge, kupuje željeni trening putem online plaćanja i nakon uspešne kupovine koristi kupljeni video trening za samostalno vežbanje. Sistem omogućava prikaz strukture treninga, video snimaka vežbi i informacija o broju ponavljanja.
+
+\subsubsection*{Akteri}
+\begin{itemize}
+    \item \textbf{Klijent} -- korisnik koji kupuje i koristi video treninge za samostalno vežbanje.
+    \item \textbf{Platni sistem} -- eksterni sistem koji obrađuje online plaćanje.
+\end{itemize}
+
+\subsubsection*{Preduslovi}
+\begin{itemize}
+    \item Klijent mora da bude registrovan
+    \item Postoje dostupni video treninzi u sistemu.
+    \item Klijent ima validan način plaćanja.
+\end{itemize}
+
+\subsubsection*{Osnovni tok}
+\begin{enumerate}
+    \item Klijent se uloguje u aplikaciju.
+    \item Klijent otvara tab za "Video trainings" u navigaciji.
+    \item Sistem prikazuje dve liste video treninga: dostupne treninge i kupljene treninge.
+    \item Klijent pregleda listu dostupnih treninga zajedno sa kratkim opisima.
+    \item Klijent bira opciju \textbf{Buy training} za video trening koji još nije kupljen.
+    \item Sistem pokreće slučaj upotrebe \textbf{"Obrada plaćanja"}.
+    \item Sistem evidentira kupovinu video treninga.
+    \item Sistem dodaje kupljeni trening u listu kupljenih treninga klijenta.
+    \item Klijent bira kupljeni video trening iz liste kupljenih treninga.
+    \item Sistem prikazuje detalje treninga, uključujući listu vežbi, broj ponavljanja i setova i video snimak svake vežbe.
+    \item Klijent koristi video trening i samostalno izvršava vežbe prema prikazanim uputstvima.
+\end{enumerate}
+
+\subsubsection*{Postuslovi}
+\begin{itemize}
+    \item Video trening je uspešno kupljen i dostupan klijentu.
+    \item Klijent ima pristup svim video snimcima i informacijama o vežbama kupljenog treninga.
+    \item Sistem je evidentirao kupovinu video treninga.
+\end{itemize}
+
+\subsubsection*{Alternativni tokovi}
+
+\textbf{A1: Plaćanje nije uspešno}
+\begin{itemize}
+    \item U koraku 7 sistem ne evidentira uspešnu kupovinu.
+    \item Sistem obaveštava klijenta da plaćanje nije uspešno.
+    \item Klijent se vraća na korak 4 i može pokušati ponovo ili odustati od kupovine.
+\end{itemize}
+
+\textbf{A2: Nema dostupnih video treninga}
+\begin{itemize}
+    \item U koraku 2 sistem ne pronalazi dostupne video treninge.
+    \item Sistem prikazuje odgovarajuću poruku klijentu.
+    \item Slučaj upotrebe se završava.
+\end{itemize}
+
+\subsubsection*{Dodatne informacije}
+\begin{itemize}
+    \item Video trening se sastoji od jedne ili više vežbi, pri čemu svaka vežba ima pripadajući video snimak i definisan broj ponavljanja i setova.
+    \item Kupljeni video treninzi ostaju trajno dostupni klijentu.
+\end{itemize}
+
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=0.9\linewidth]{images/treniranje_po_video.png}
+    \caption{Dijagram slučaja upotrebe "Treniranje po video snimcima"}
+\end{figure}
+
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=0.9\linewidth]{diagrams/sequence_diagrams/train_with_video_trainings.png}
+    \caption{Dijagram slučaja upotrebe "Treniranje po video snimcima"}
+\end{figure}
+
+\FloatBarrier
