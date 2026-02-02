@@ -1,0 +1,88 @@
+\documentclass{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[serbian]{babel}
+\usepackage{graphicx}
+\usepackage{placeins}
+\usepackage{xcolor}
+\usepackage{float}
+
+\begin{document}
+
+\shorthandoff{"}
+
+% ================= TITLE PAGE =================
+
+\begin{titlepage}
+    \centering
+    {\LARGE Univerzitet u Beogradu}\\[0.5cm]
+    {\LARGE Matematički fakultet}\\[2.5cm]
+
+    \rule{\linewidth}{0.5mm} \\[0.4cm]
+    {\Huge \textbf{Informacioni sistem digitalne fitnes platforme}} \\[0.2cm]
+    \rule{\linewidth}{0.5mm} \\[3cm]
+
+    \noindent
+    \begin{minipage}{0.4\textwidth}
+        \begin{flushleft} \large
+            \textbf{Autor:}\\
+               Dimitrije Vranić\\
+            Vukasin Marković\\
+            Dimitrije Petrović\\
+            Petar Magenhajm
+        \end{flushleft}
+    \end{minipage}
+    \hfill
+    \begin{minipage}{0.4\textwidth}
+        \begin{flushright} \large
+            \textbf{Profesor:} \\
+            dr Saša Malkov\\[0.5cm]
+            \textbf{Asistent:} \\
+            Dara Milojković
+        \end{flushright}
+    \end{minipage}
+
+\vfill
+
+
+\begin{center}
+    \colorbox{black!15}{
+        \includegraphics[width=3cm]{images/logoMatf.png}
+    }
+
+    \vspace{0.5cm}
+
+    \colorbox{black!15}{
+        \includegraphics[width=3cm]{images/logoUniverzitet.png}
+    }
+\end{center}
+
+\vspace{1cm}
+{\Large \today}
+\end{titlepage}
+
+
+
+
+
+\tableofcontents
+\newpage
+
+\input{documentation/intro}
+
+\input{documentation/use_cases}
+
+\input{documentation/data_flow_diagram}
+
+\input{documentation/baza}
+
+\input{documentation/softwareArchitecture}
+
+\input{documentation/ui}
+
+
+
+
+
+\end{document}
