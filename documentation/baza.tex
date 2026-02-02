@@ -1,10 +1,19 @@
 \section{Baza podataka}
 
-Baza podataka informacionog sistema za upravljanje treninzima projektovana je sa ciljem da pouzdano skladišti i organizuje sve ključne podatke neophodne za funkcionisanje sistema. Ona obuhvata podatke o korisnicima (klijentima i trenerima), treninzima, video vežbama i video treninzima, rezervacijama termina, komunikaciji putem četa, obaveštenjima, kao i transakcijama vezanim za online plaćanja.
+Baza podataka informacionog sistema digitalne fitnes platforme projektovana je sa ciljem pouzdanog skladištenja i organizacije svih ključnih podataka neophodnih za funkcionisanje sistema. Sistem je realizovan u mikroservisnoj arhitekturi i primarno koristi NoSQL bazu podataka (MongoDB), što omogućava fleksibilno modelovanje podataka, lako prilagođavanje promenama u domenu i efikasno skaliranje pojedinačnih servisa.
 
-Struktura baze podataka omogućava jasno razdvajanje uloga korisnika i njihovih aktivnosti, kao i praćenje odnosa između treninga, vežbi i klijenata. Posebna pažnja posvećena je očuvanju integriteta podataka, primenom odgovarajućih primarnih i stranih ključeva, kao i podršci za istoriju transakcija i trajnu dostupnost kupljenih video treninga. Dizajn baze omogućava efikasno pretraživanje podataka i predstavlja dobru osnovu za dalje proširenje sistema.
+Pored domenskih podataka koji se čuvaju u NoSQL bazama, sistem koristi i relacijsku bazu podataka (Microsoft SQL Server) u okviru IdentityServer komponente. Ova baza namenjena je skladištenju podataka vezanih za autentifikaciju i autorizaciju korisnika, uključujući korisničke naloge, uloge, dozvole i bezbednosne tokene. Upotreba relacione baze u ovom delu sistema obezbeđuje visok nivo
+konzistentnosti i integriteta podataka prilikom upravljanja identitetima, dok se u ostalim mikroservisima zadržavaju prednosti dokumentno-orijentisanog pristupa.
 
-\begin{figure}[h!]
+Podaci u NoSQL bazama organizovani su u zasebne kolekcije koje odgovaraju osnovnim domenskim entitetima sistema, kao što su korisnici (klijenti i treneri), treninzi, video treninzi, planovi ishrane, rezervacije termina, čet sesije, notifikacije i platne transakcije. Svaki mikroservis poseduje sopstvenu bazu podataka, čime se obezbeđuje jasna razdvojenost odgovornosti i nezavisnost servisa.
+
+Veze između entiteta ostvarene su referencama putem identifikatora (npr. TrainerId, ClientId, ClientIds), umesto korišćenja klasičnih relacijskih stranih ključeva. Ovakav pristup je u skladu sa principima NoSQL baza podataka i mikroservisne arhitekture. Na primer, entitet trening sadrži listu identifikatora klijenata koji učestvuju u treningu, dok se poruke u okviru četa čuvaju kao ugnežđeni dokumenti
+unutar odgovarajuće čet sesije.
+
+Ovakav dizajn baze podataka omogućava jasno razdvajanje korisničkih uloga i njihovih aktivnosti, efikasno praćenje veza između trenera, klijenata i sadržaja, kao i jednostavno izdvajanje podataka potrebnih za analitičke servise. Istovremeno se obezbeđuje
+pouzdano i stabilno funkcionisanje celokupnog informacionog sistema.
+
+\begin{figure}[H]
     \centering
     \includegraphics[width=\textwidth]{diagrams/data_base_diagrams/Data class diagram.png}
     \caption{UML dijagram klasa baze podataka}

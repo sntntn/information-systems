@@ -2,65 +2,138 @@
 
 \subsection{Korišćena Arhitektura Sistema}
 
-    U razvoju aplikacije FitPlusPlus korišćena je \textbf{višeslojna arhitektura} (3-tier architecture) gde svaki deo je izdeljen na mikroservise. Ovaj način organizacije je izabran jer omogućava lakše održavanje i jednostavniju nadogradnju sistema novim funkcionalnostima. Razvijena je web-aplikacija sa 3 osnovna pogleda, iz perspektive \textit{korisnika}, \textit{trenera} i \textit{administratora}. 
+    Aplikacija FitPlusPlus razvijena je korišćenjem mikroservisne arhitekture, u okviru koje je funkcionalnost sistema podeljena na skup nezavisnih, slabo povezanih servisa. Svaki mikroservis predstavlja samostalnu celinu sa jasno definisanom odgovornošću, sopstvenom bazom podataka i jasno definisanim interfejsima za komunikaciju sa ostalim delovima sistema.
+
+    Ovakav arhitektonski pristup izabran je zbog sledećih prednosti:
+    \begin{itemize}
+        \item lakšeg održavanja i razvoja sistema,
+        \item mogućnosti nezavisnog skaliranja pojedinačnih servisa,
+        \item veće robusnosti sistema u slučaju grešaka,
+        \item jasnog razdvajanja domena i odgovornosti.
+    \end{itemize}
+
+    Sistem se sastoji od frontend aplikacije i niza backend mikroservisa, pri čemu frontend komunicira sa backendom isključivo preko API
+    Gateway komponente. API Gateway predstavlja centralnu ulaznu tačku u sistem i odgovoran je za rutiranje zahteva ka odgovarajućim mikroservisima, kao i za objedinjavanje komunikacije prema klijentskoj aplikaciji.
+
+    Za otkrivanje i registraciju servisa koristi se Service Discovery mehanizam (Consul), koji omogućava dinamičko pronalaženje dostupnih instanci mikroservisa bez potrebe za statičkom konfiguracijom adresa.
+
+    Backend mikroservisi komuniciraju međusobno koristeći kombinaciju:
+    \begin{itemize}
+        \item REST API-ja za sinhronu komunikaciju,
+        \item gRPC protokola za efikasnu internu komunikaciju između servisa,
+        \item asinhrone razmene poruka putem RabbitMQ-a, što omogućava asinhrono povezivanje servisa i veću otpornost sistema.
+    \end{itemize}
+
+    Za potrebe rada u realnom vremenu, kao što je direktna čet komunikacija između klijenata i trenera, koristi se WebSocket protokol, koji omogućava dvosmernu i kontinuiranu razmenu poruka bez potrebe za ponovnim slanjem HTTP zahteva.
+
+    Svaki mikroservis poseduje sopstvenu bazu podataka, čime se primenjuje princip \textit{database-per-service}.
+
+    Kompletan sistem je kontejnerizovan korišćenjem Docker-a, dok je orkestracija servisa realizovana pomoću Docker Compose-a, što  omogućava jednostavno pokretanje, konfiguraciju i razvoj sistema u različitim okruženjima.
+
     
-\subsubsection{UI Layer}
+\subsubsection{Frontend aplikacija}
 
-\begin{description}
-  \item[\textbf{Opis}] 
-  Predstavlja vizualni interfejs za korišćenje aplikacije, kao i interakcije korisnika i trenera, i upravljanje sistemom kao administrator.
+Osnovna uloga frontend aplikacije je omogućavanje interakcije korisnika sa sistemom kroz intuitivan i responzivan korisnički interfejs. Ne sadrži poslovnu logiku sistema, već služi kao posrednik između korisnika i backend mikroservisa, sa kojima komunicira putem API Gateway komponente.
 
-  \item[\textbf{Komponente}]~
-  
-  \begin{itemize}
-    \item \textbf{Admin Perspektiva} – Ova perspektiva ima meni sa listama svih klijenata i svih trenera.
-    \item \textbf{Trener Perspektiva} – Ova perspektiva ima meni sa opcijama za: određivanje slobodnih termina za individualni trening, održavanje grupnog treninga, postavljanje nutricionih planova, chat sa klijentima, dodavanje video treninga i analitike korišćenja aplikacije.
-    \item \textbf{Klijent Perspektiva} – Ova perspektiva ima meni sa opcijama za: rezervaciju individualnog treninga, rezervaciju grupnog treninga, nutricione planove, chat, video treninge kao i analitike korišćenja aplikacije.
-  \end{itemize}
+Pristup funkcionalnostima aplikacije prilagođen je korisničkim ulogama, pri čemu se nakon uspešne autentifikacije korisnicima prikazuju odgovarajući pogledi i opcije u skladu sa njihovim privilegijama (klijent, trener ili administrator). \\
+\\
+\textbf{Komponente:}
+\begin{enumerate}
+    \item \textbf{Administratorska perspektiva} \\
+    Omogućava pregled i upravljanje osnovnim podacima o korisnicima sistema (klijentima i trenerima).
 
-  \item[\textbf{Tehnologije}]
-  Vue.js, API pozivi ka dockerizovanom backendu
-\item[\textbf{Bezbednost}:] HTTPS, Autentikacija(JWT Tokeni), Permisije zasnovane na ulogama 
-\end{description}
+    \item \textbf{Perspektiva trenera} \\
+    Omogućava:
+    \begin{itemize}
+        \item upravljanje individualnim i grupnim treninzima,
+        \item definisanje dostupnih termina,
+        \item kreiranje i upravljanje nutritivnim planovima,
+        \item komunikaciju sa klijentima putem čet sistema u realnom vremenu,
+        \item dodavanje i upravljanje video treninzima,
+        \item pregled analitičkih podataka o treninzima i klijentima.
+    \end{itemize}
 
+    \item \textbf{Perspektiva klijenta} \\
+    Omogućava:
+    \begin{itemize}
+        \item rezervaciju individualnih i grupnih treninga,
+        \item pregled i praćenje nutritivnih planova,
+        \item komunikaciju sa trenerima putem četa,
+        \item pristup kupljenim video treninzima,
+        \item pregled lične statistike i analitike korišćenja aplikacije.
+    \end{itemize}
+\end{enumerate}
 
+\textbf{Tehnologije:}
+\begin{itemize}
+    \item JavaScript (ES6+), HTML5, CSS3
+    \item Frontend aplikacija koristi REST API i WebSocket komunikaciju za interakciju sa backend servisima
+\end{itemize}
 
-\subsubsection{Buisness Logic Layer}
-\begin{description}
-    \item[\textbf{Opis}:] Predstavlja sloj na kojem se nalazi svi zahtevi, validacije, zaštite, pravila rada aplikacije objasnjeni kroz mikroservise.
-    
-    \item[\textbf{Mikroservisi}:] ~
-        \begin{itemize}
-            \item \textbf{Identity Service} - Servis koji je zadužen za autentikaciju i autorizaciju korisnika.
-            \item \textbf{Client Service} - Servis koji je zadužen za za upravljanje profila klijenta, upravljanje profila i podacima od članstvu. 
-            \item \textbf{Trainer Service} - Servis koji je zadužen za upravljanje profila trenera, rasporeda i istorije treninga.
-            \item \textbf{Review Service} - Servis koji je dozvoljava klijentima i trenerima da ostave ocene treingna
-            \item \textbf{Payment Service} - Servis zaduzen za obradu placanja treninga.
-            \item \textbf{Chat Service} - Servis koji je zadužen za direktnu komunikaciju između klijenta i trenera, i omogućava treneru da usluži online mentorstvo.
-            \item \textbf{Video Training Service} - Servis koji omogucava korisnicima pristup biblioteci sa snimcima treninga, i informacije trenera. Treneri dodanto mogu da ubacuju ili brisu snimke.
-            \item \textbf{Reservation Service} - Servis koji omogućava rezervisanje grupnih ili individualnih treninga, zakazivanje, otakzivanje i praćenje dostupnosti termina u realnom vremenu.
-            \item \textbf{Notification Service} - Servis zadužen za push i email notifikacije, vezan za sve rezervacije, plaćanja.
-            \item \textbf{Analitics Service} - Servis koji omogućava korisnicima da prate svoje statistike korišćenja FitPlusPlus aplukacije.
-            \item \textbf{Nutrition  Service} - Servis koji je zadužen za upravljanjem planova ishrane i praćenja kalorija. Trener može da dodaje hrane i njihove nutritivne vrednosti, da pravi planove za sve tipove cilja, da dodaje, briše i menja trenutne planove.
-            \item \textbf{Gateway and Discovery Service} - Servis koji služi kao centralizovani "gateway" i stara se o tome da svaki poziv ode odgovarajućem mikorservisu. 
-        \end{itemize}
-    \item[\textbf{Tehnologije}:] ASP.NET Core, C\#, RabbitMQ, Websockets, GRPC, REST API, Ocelot, Consul 
-    \item[\textbf{Integracije}:] FluentEmail, Paypal
-\end{description}
+\textbf{Bezbednost UI sloja obezbeđena je primenom sledećih mehanizama:}
+\begin{itemize}
+    \item komunikacija sa backend servisima putem HTTPS protokola,
+    \item autentifikacija zasnovana na JWT tokenima dobijenim od IdentityServer komponente,
+    \item autorizacija zasnovana na korisničkim ulogama i permisijama, pri čemu se pristup funkcionalnostima dinamički prilagođava u zavisnosti od uloge korisnika.
+\end{itemize}
 
-\subsubsection{Database Layer}
-\begin{description}
-    \item[\textbf{Opis}:] Sloj koji opisuje način čuvanja i prisutpa podacima.
-    \item[\textbf{Komponente}:]~
-         \begin{itemize}
-            \item Baza podataka - Koriste se baze podataka za skoro svaki mikro servis gde je glavna nerelaciona baza podataka MongoDB.\newline
-            Kljucni entiti su: Training, Excercise, Trainer, Client.
-        \end{itemize} 
-    \item[\textbf{Bezbednost}:] Pristupanje na osnovu uloga, enkripcija podataka
-\end{description}
+\subsubsection{Backend aplikacija}
 
-\begin{figure}[h!]
+Backend aplikacija predstavlja centralni deo sistema u kome je implementirana poslovna logika digitalne fitnes platforme. Backend je realizovan kao skup nezavisnih mikroservisa, od kojih svaki obrađuje tačno definisan deo domenskog problema i implementira odgovarajuća poslovna pravila.
+
+Mikroservisi u okviru backend aplikacije:
+\begin{itemize}
+    \item obrađuju zahteve pristigle sa frontend aplikacije putem API Gateway komponente,
+    \item sprovode validaciju podataka i primenu poslovnih pravila,
+    \item upravljaju sopstvenim skupovima podataka,
+    \item razmenjuju podatke sa ostalim mikroservisima korišćenjem sinhrone i asinhrone komunikacije.
+\end{itemize}
+
+U skladu sa mikroservisnom arhitekturom, primenjen je princip \textit{database-per-service}, gde svaki mikroservis poseduje sopstvenu bazu podataka i u potpunosti je odgovoran za upravljanje svojim podacima.
+
+\textbf{Mikroservisi:}
+\begin{itemize}
+    \item \textbf{Client Service} \\
+    Zadužen za upravljanje podacima o klijentima, njihovim profilima i povezanim informacijama.
+
+    \item \textbf{Trainer Service} \\
+    Omogućava upravljanje profilima trenera, dostupnim treninzima i povezanim podacima.
+
+    \item \textbf{Reservation Service} \\
+    Omogućava rezervaciju individualnih i grupnih treninga, upravljanje terminima, otkazivanje i praćenje dostupnosti. Servis je integrisan sa Payment, Notification i Analytics servisima.
+
+    \item \textbf{Payment Service} \\
+    Zadužen za obradu plaćanja treninga i dodatnih usluga, kao i za evidenciju platnih transakcija.
+
+    \item \textbf{Chat Service} \\
+    Omogućava realizaciju online mentorstva između klijenata i trenera putem direktne komunikacije u realnom vremenu, korišćenjem WebSocket tehnologije.
+
+    \item \textbf{Video Training Service} \\
+    Omogućava upravljanje video treninzima i vežbama. Treneri mogu kreirati i održavati video sadržaj, dok klijenti imaju pristup kupljenim treninzima.
+
+    \item \textbf{Review Service} \\
+    Omogućava klijentima i trenerima ostavljanje ocena i komentara nakon završenih treninga.
+
+    \item \textbf{Nutrition Service} \\
+    Zadužen za upravljanje nutritivnim planovima i ciljevima ishrane. Treneri mogu kreirati planove ishrane, dok klijenti mogu pratiti unos kalorija i lične ciljeve.
+
+    \item \textbf{Notification Service} \\
+    Zadužen za slanje sistemskih obaveštenja korisnicima u vezi sa rezervacijama, plaćanjima i drugim relevantnim događajima.
+
+    \item \textbf{Analytics Service} \\
+    Prikuplja i obrađuje podatke o aktivnostima korisnika i treninga, omogućavajući generisanje statistike i analitičkih pregleda.
+\end{itemize}
+
+\textbf{Tehnologije i komunikacija}
+\begin{itemize}
+    \item \textbf{Backend tehnologija}: ASP.NET Core (C\#)
+    \item \textbf{Sinhrona komunikacija}: REST API i gRPC
+    \item \textbf{Asinhrona komunikacija}: RabbitMQ (Event Bus)
+    \item \textbf{Real-time komunikacija}: WebSockets
+\end{itemize}
+
+\begin{figure}[H]
     \centering
     \includegraphics[width=0.5\linewidth]{images/architectureDiagram.png}
-    \caption{Dijgram Arhitekture Softwera}
+    \caption{Dijagram Arhitekture Softvera}
 \end{figure}
