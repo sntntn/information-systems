@@ -1,88 +1,47 @@
-\documentclass{article}
+\section{Uvod}
 
-\usepackage[utf8]{inputenc}
-\usepackage[T1]{fontenc}
-\usepackage[serbian]{babel}
-\usepackage{graphicx}
-\usepackage{placeins}
-\usepackage{xcolor}
-\usepackage{float}
+Informacioni sistem digitalne fitnes platforme predstavlja sveobuhvatno softversko rešenje namenjeno podršci modernom načinu vežbanja, planiranja fizičkih aktivnosti i vođenja zdravog načina života. Sistem integriše više funkcionalnih celina, uključujući upravljanje treninzima (individualnim, grupnim i video treninzima), zakazivanje termina, komunikaciju između klijenata i trenera, izradu i praćenje planova ishrane, kao i obradu online plaćanja i slanje obaveštenja.
 
-\begin{document}
-
-\shorthandoff{"}
-
-% ================= TITLE PAGE =================
-
-\begin{titlepage}
-    \centering
-    {\LARGE Univerzitet u Beogradu}\\[0.5cm]
-    {\LARGE Matematički fakultet}\\[2.5cm]
-
-    \rule{\linewidth}{0.5mm} \\[0.4cm]
-    {\Huge \textbf{Informacioni sistem digitalne fitnes platforme}} \\[0.2cm]
-    \rule{\linewidth}{0.5mm} \\[3cm]
-
-    \noindent
-    \begin{minipage}{0.4\textwidth}
-        \begin{flushleft} \large
-            \textbf{Autor:}\\
-               Dimitrije Vranić\\
-            Vukasin Marković\\
-            Dimitrije Petrović\\
-            Petar Magenhajm
-        \end{flushleft}
-    \end{minipage}
-    \hfill
-    \begin{minipage}{0.4\textwidth}
-        \begin{flushright} \large
-            \textbf{Profesor:} \\
-            dr Saša Malkov\\[0.5cm]
-            \textbf{Asistent:} \\
-            Dara Milojković
-        \end{flushright}
-    \end{minipage}
-
-\vfill
+Cilj sistema je da omogući centralizovanu i efikasnu platformu koja povezuje klijente, trenere i administratore, olakšava organizaciju treninga i unapređuje korisničko iskustvo kroz digitalizaciju ključnih procesa. Sistem omogućava personalizovan pristup treniranju, praćenje napretka i kontinuiranu interakciju između učesnika, čime doprinosi boljoj motivaciji i kvalitetnijim rezultatima korisnika.
 
 
-\begin{center}
-    \colorbox{black!15}{
-        \includegraphics[width=3cm]{images/logoMatf.png}
-    }
+\subsection{Akteri}
 
-    \vspace{0.5cm}
+Sistem prepoznaje sledeće grupe korisnika koji interaguju sa njegovim funkcionalnostima na različite načine:
 
-    \colorbox{black!15}{
-        \includegraphics[width=3cm]{images/logoUniverzitet.png}
-    }
-\end{center}
+\begin{itemize}
+    \item \textbf{Klijent}: Registrovani korisnik sistema koji koristi usluge treninga. Klijent može pregledati dostupne treninge, rezervisati individualne i grupne treninge, kupovati i koristiti video treninge, komunicirati sa trenerima putem četa, vršiti online plaćanja i upravljati svojim obaveštenjima.
+    
+    \item \textbf{Trener}: Korisnik sistema zadužen za kreiranje i upravljanje treninzima. Trener može kreirati video vežbe i video treninge, definisati strukturu treninga, upravljati terminima, komunicirati sa klijentima i pratiti realizaciju treninga.
 
-\vspace{1cm}
-{\Large \today}
-\end{titlepage}
+    \item \textbf{Administrator}: Korisnik sistema zadužen za tehničku administraciju i održavanje sistema. Administrator može dodavati ili uklanjati korisnike, upravljati pravima pristupa, kao i nadgledati rad sistema u celini.
+    
+    \item \textbf{Platni sistem}: Eksterni sistem koji obrađuje online plaćanja. Odgovoran je za validaciju i realizaciju transakcija prilikom kupovine treninga, rezervacije termina ili čet sesije.
+\end{itemize}
 
+\subsection{Korišćeni alati}
 
+Za analizu, projektovanje i dokumentovanje informacionog sistema korišćen je skup standardizovanih jezika za modelovanje i odgovarajući softverski alati:
 
+\begin{itemize}
+    \item \textbf{UML (Unified Modeling Language)} dijagrami:
+    \begin{itemize}
+        \item \textbf{Slučajevi upotrebe}: Za opis funkcionalnosti sistema iz perspektive korisnika.
+        \item \textbf{Dijagrami sekvence}: Za prikaz interakcije između aktera i sistemskih komponenti tokom realizacije slučajeva upotrebe.
+        \item \textbf{Dijagrami aktivnosti}: Za modelovanje toka procesa i korisničkih radnji.
+        \item \textbf{Dijagrami stanja}: Za prikaz životnog ciklusa važnih objekata u sistemu.
+        \item \textbf{Dijagrami klasa}: Za prikaz modela baze podataka.
+    \end{itemize}
+    
+    \item \textbf{BPMN (Business Process Model and Notation)}: Za modelovanje poslovnih procesa, naročito u delu obrade plaćanja i rezervacija.
 
+    \item \textbf{DFD (Data Flow Diagram)}: Za prikaz toka podataka kroz sistem
 
-\tableofcontents
+    \item \textbf{LaTeX}: Korišćen za izradu i formatiranje tehničke dokumentacije, zbog podrške za strukturiranje sadržaja i profesionalni izgled dokumenata.
+
+    \item \textbf{Vue.js}: Korišćen za izradu korisnickog interfejsa.
+
+    \item \textbf{ScreenRec}: Korišćen za snimanje video zapisa korišćenja sistema.
+
+\end{itemize}
 \newpage
-
-\input{documentation/intro}
-
-\input{documentation/use_cases}
-
-\input{documentation/data_flow_diagram}
-
-\input{documentation/baza}
-
-\input{documentation/softwareArchitecture}
-
-\input{documentation/ui}
-
-
-
-
-
-\end{document}
